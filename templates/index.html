@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GoodCredit — Credit Risk Scorecard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <span class="logo-icon">🏦</span>
+      <div>
+        <div class="logo-name">GoodCredit</div>
+        <div class="logo-sub">Credit Risk Scorecard </div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="model-chip">{{ meta.best_model_name }}</div>
+      <div class="gini-chip">Gini <strong>{{ metrics.gini }}</strong></div>
+    </div>
+  </div>
+</header>
+
+<!-- ── Metrics Bar ── -->
+<div class="metrics-bar">
+  <div class="metric">
+    <span class="metric-label">Model Gini</span>
+    <span class="metric-val accent">{{ metrics.gini }}</span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">Model AUC</span>
+    <span class="metric-val accent">{{ metrics.auc }}</span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">Total Customers</span>
+    <span class="metric-val">{{ "{:,}".format(meta.class_stats.total_customers) }}</span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">Bad Rate</span>
+    <span class="metric-val warn">{{ meta.class_stats.bad_rate_pct }}%</span>
+  </div>
+  <div class="metric">
+    <span class="metric-label">Bad Customers</span>
+    <span class="metric-val warn">{{ "{:,}".format(meta.class_stats.n_bad) }}</span>
+  </div>
+</div>
+
+<!-- ── Two-column layout ── -->
+<main>
+  <div class="two-col">
+
+    <!-- Left: Input Form -->
+    <div class="left-panel">
+      <form id="predict-form">
+
+        <!-- Section: Account History -->
+        <section class="card">
+          <h2><span class="sec-icon">💳</span> Account & Payment History</h2>
+          <div class="grid2">
+            <div class="field">
+              <label>Number of Accounts</label>
+              <input type="number" name="num_accounts" value="3" min="0" max="30" />
+            </div>
+            <div class="field">
+              <label>Max DPD Ever (Days Past Due)</label>
+              <input type="number" name="max_dpd_max" value="0" min="0" max="365" />
+            </div>
+            <div class="field">
+              <label>30-59 DPD Occurrences</label>
+              <input type="number" name="cnt_30_59_sum" value="0" min="0" max="50" />
+            </div>
+            <div class="field">
+              <label>60-89 DPD Occurrences</label>
+              <input type="number" name="cnt_60_89_sum" value="0" min="0" max="50" />
+            </div>
+            <div class="field">
+              <label>90+ DPD Occurrences</label>
+              <input type="number" name="cnt_90_plus_sum" value="0" min="0" max="50" />
+            </div>
+            <div class="field">
+              <label>Accounts with 30+ DPD</label>
+              <input type="number" name="is_30_plus_ever_sum" value="0" min="0" max="20" />
+            </div>
+            <div class="field">
+              <label>Avg Payment History Length (months)</label>
+              <input type="number" name="payment_history_length_mean" value="24" min="0" max="120" />
+            </div>
+          </div>
+        </section>
+
+        <!-- Section: Credit Utilisation -->
+        <section class="card">
+          <h2><span class="sec-icon">📊</span> Credit Utilisation</h2>
+          <div class="grid2">
+            <div class="field">
+              <label>Current Balance (₹)</label>
+              <input type="number" name="cur_balance_amt_sum" value="50000" min="0" />
+            </div>
+            <div class="field">
+              <label>Total Credit Limit (₹)</label>
+              <input type="number" name="creditlimit_sum" value="200000" min="0" />
+            </div>
+            <div class="field">
+              <label>Amount Past Due (₹)</label>
+              <input type="number" name="amt_past_due_sum" value="0" min="0" />
+            </div>
+            <div class="field">
+              <label>Utilisation Ratio <span class="hint">(0–1)</span></label>
+              <input type="number" name="ratio_currbalance_creditlimit" value="0.25" min="0" max="2" step="0.01" />
+            </div>
+          </div>
+        </section>
+
+        <!-- Section: Enquiry Behaviour -->
+        <section class="card">
+          <h2><span class="sec-icon">🔍</span> Credit Enquiry Behaviour</h2>
+          <div class="grid2">
+            <div class="field">
+              <label>Total Enquiries</label>
+              <input type="number" name="num_enquiries" value="5" min="0" max="200" />
+            </div>
+            <div class="field">
+              <label>Enquiries (last 90 days)</label>
+              <input type="number" name="count_enquiry_recency_90" value="1" min="0" max="50" />
+            </div>
+            <div class="field">
+              <label>Enquiries (last 365 days)</label>
+              <input type="number" name="count_enquiry_recency_365" value="3" min="0" max="100" />
+            </div>
+            <div class="field">
+              <label>Total Enquiry Amount (₹)</label>
+              <input type="number" name="total_enq_amt" value="100000" min="0" />
+            </div>
+            <div class="field">
+              <label>Unique Enquiry Purposes</label>
+              <input type="number" name="n_unique_purpose" value="2" min="0" max="10" />
+            </div>
+          </div>
+        </section>
+
+        <!-- Section: Demographics -->
+        <section class="card">
+          <h2><span class="sec-icon">👤</span> Demographics (Top Predictive Features)</h2>
+          <div class="grid2">
+            <div class="field">
+              <label>Feature 7 <span class="hint">(anonymised)</span></label>
+              <input type="number" name="feature_7" value="0" step="any" />
+            </div>
+            <div class="field">
+              <label>Feature 3</label>
+              <input type="number" name="feature_3" value="0" step="any" />
+            </div>
+            <div class="field">
+              <label>Feature 21</label>
+              <input type="number" name="feature_21" value="0" step="any" />
+            </div>
+            <div class="field">
+              <label>Feature 20</label>
+              <input type="number" name="feature_20" value="0" step="any" />
+            </div>
+            <div class="field">
+              <label>Feature 1</label>
+              <input type="number" name="feature_1" value="0" step="any" />
+            </div>
+            <div class="field">
+              <label>Feature 2</label>
+              <input type="number" name="feature_2" value="0" step="any" />
+            </div>
+          </div>
+        </section>
+
+        <button type="submit" class="btn-predict" id="submit-btn">
+          <span id="btn-text">🔍 Assess Credit Risk</span>
+        </button>
+
+      </form>
+    </div>
+
+    <!-- Right: Results & Info -->
+    <div class="right-panel">
+
+      <!-- Result card (hidden until prediction) -->
+      <div id="result-card" class="result-card hidden">
+        <div class="result-header">
+          <div class="result-icon" id="result-icon"></div>
+          <div class="result-tier" id="result-tier"></div>
+        </div>
+        <div class="result-prob-row">
+          <div class="prob-box bad">
+            <div class="prob-label">Bad Probability</div>
+            <div class="prob-val" id="res-bad-pct"></div>
+          </div>
+          <div class="prob-box good">
+            <div class="prob-label">Good Probability</div>
+            <div class="prob-val" id="res-good-pct"></div>
+          </div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Credit Score</div>
+          <div class="score-val" id="res-score"></div>
+          <div class="score-sub">(higher = lower risk)</div>
+        </div>
+        <div class="risk-bar-wrap">
+          <div class="risk-bar-track">
+            <div class="risk-bar-fill" id="risk-bar"></div>
+          </div>
+          <div class="risk-bar-labels">
+            <span>Low Risk</span><span>High Risk</span>
+          </div>
+        </div>
+        <div class="result-footer" id="result-footer"></div>
+      </div>
+
+      <!-- Error -->
+      <div id="error-card" class="error-card hidden">
+        <span id="error-msg"></span>
+      </div>
+
+      <!-- Model Info -->
+      <div class="card info-card">
+        <h2><span class="sec-icon">🧠</span> Model Comparison</h2>
+        <div class="model-table">
+          <div class="mt-row header">
+            <span>Model</span><span>Gini</span>
+          </div>
+          {% for name, gini in meta.all_models_gini.items() %}
+          <div class="mt-row {% if loop.first %}best{% endif %}">
+            <span>{{ name }}</span>
+            <span class="gini-val">{{ gini }}</span>
+          </div>
+          {% endfor %}
+          <div class="mt-row benchmark">
+        </div>
+      </div>
+
+      <!-- Top Features -->
+      <div class="card info-card">
+        <h2><span class="sec-icon">⭐</span> Top 10 Predictive Features</h2>
+        <div class="feature-list">
+          {% for f in meta.top_features[:10] %}
+          <div class="feat-row">
+            <span class="feat-name">{{ f.feature }}</span>
+            <div class="feat-bar-wrap">
+              <div class="feat-bar" style="width:{{ (f.importance * 100 / meta.top_features[0].importance)|round|int }}%"></div>
+            </div>
+            <span class="feat-imp">{{ "%.3f"|format(f.importance) }}</span>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Rank ordering table -->
+      <div class="card info-card">
+        <h2><span class="sec-icon">📈</span> Rank-Ordering (Decile Table)</h2>
+        <table class="decile-table">
+          <thead>
+            <tr><th>Decile</th><th>Customers</th><th>Bad</th><th>Bad Rate</th></tr>
+          </thead>
+          <tbody>
+            {% for row in meta.rank_table %}
+            <tr class="{% if row.decile >= 9 %}high-risk-row{% elif row.decile <= 2 %}low-risk-row{% endif %}">
+              <td>{{ row.decile }}</td>
+              <td>{{ row.n_customers }}</td>
+              <td>{{ row.n_bad }}</td>
+              <td>
+                <div class="rate-cell">
+                  <div class="rate-bar" style="width:{{ [row.bad_rate * 5, 100]|min }}%"></div>
+                  <span>{{ row.bad_rate }}%</span>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <div class="decile-note">Decile 10 = highest predicted risk · monotonic bad-rate ✅</div>
+      </div>
+
+    </div><!-- .right-panel -->
+  </div><!-- .two-col -->
+</main>
+
+<footer>
+  <p>Bank GoodCredit · PR-0015 · {{ meta.best_model_name }} · Gini {{ metrics.gini }} · {{ "{:,}".format(meta.class_stats.total_customers) }} customers trained</p>
+</footer>
+
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

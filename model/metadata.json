@@ -1,0 +1,282 @@
+{
+  "best_model_name": "RandomForest",
+  "feature_names": [
+    "feature_1",
+    "feature_2",
+    "feature_3",
+    "feature_4",
+    "feature_5",
+    "feature_6",
+    "feature_7",
+    "feature_8",
+    "feature_9",
+    "feature_11",
+    "feature_12",
+    "feature_13",
+    "feature_14",
+    "feature_15",
+    "feature_16",
+    "feature_19",
+    "feature_20",
+    "feature_21",
+    "feature_22",
+    "feature_23",
+    "feature_24",
+    "feature_25",
+    "feature_26",
+    "feature_27",
+    "feature_28",
+    "feature_29",
+    "feature_30",
+    "feature_31",
+    "feature_32",
+    "feature_33",
+    "feature_34",
+    "feature_35",
+    "feature_36",
+    "feature_37",
+    "feature_38",
+    "feature_39",
+    "feature_40",
+    "feature_41",
+    "feature_42",
+    "feature_43",
+    "feature_44",
+    "feature_45",
+    "feature_46",
+    "feature_47",
+    "feature_48",
+    "feature_50",
+    "feature_51",
+    "feature_52",
+    "feature_53",
+    "feature_54",
+    "feature_55",
+    "feature_56",
+    "feature_57",
+    "feature_58",
+    "feature_59",
+    "feature_60",
+    "feature_62",
+    "feature_63",
+    "feature_64",
+    "feature_65",
+    "feature_66",
+    "feature_67",
+    "feature_68",
+    "feature_69",
+    "feature_70",
+    "feature_71",
+    "feature_72",
+    "feature_73",
+    "feature_75",
+    "feature_76",
+    "feature_77",
+    "feature_78",
+    "feature_79",
+    "cnt_0_29_mean",
+    "cnt_0_29_sum",
+    "cnt_30_59_mean",
+    "cnt_30_59_sum",
+    "cnt_60_89_mean",
+    "cnt_60_89_sum",
+    "cnt_90_plus_mean",
+    "cnt_90_plus_sum",
+    "max_dpd_max",
+    "max_dpd_mean",
+    "months_to_first_30_plus_min",
+    "payment_history_length_mean",
+    "diff_lastpaymt_opened_dt_mean",
+    "diff_lastpaymt_opened_dt_sum",
+    "high_credit_amt_sum",
+    "high_credit_amt_mean",
+    "cur_balance_amt_sum",
+    "cur_balance_amt_mean",
+    "amt_past_due_sum",
+    "amt_past_due_mean",
+    "creditlimit_sum",
+    "creditlimit_mean",
+    "cashlimit_sum",
+    "cashlimit_mean",
+    "is_30_plus_ever_sum",
+    "is_30_plus_ever_mean",
+    "num_accounts",
+    "ratio_currbalance_creditlimit",
+    "utilisation_trend",
+    "num_enquiries",
+    "total_enq_amt",
+    "mean_enq_amt",
+    "max_enq_amt",
+    "count_enquiry_recency_90",
+    "count_enquiry_recency_365",
+    "mean_diff_open_enquiry_dt",
+    "n_unique_purpose",
+    "max_freq_enquiry"
+  ],
+  "metrics": {
+    "auc": 0.6645,
+    "gini": 32.9,
+    "benchmark_gini": 37.9,
+    "improvement": -5.0,
+    "lr_gini": 31.47,
+    "gb_gini": 31.98,
+    "rf_gini": 32.9,
+    "ens_gini": 34.35
+  },
+  "class_stats": {
+    "total_customers": 23896,
+    "n_bad": 1004,
+    "n_good": 22892,
+    "bad_rate_pct": 4.2
+  },
+  "rank_table": [
+    {
+      "decile": 1,
+      "n_customers": 478,
+      "n_bad": 6,
+      "bad_rate": 1.26
+    },
+    {
+      "decile": 2,
+      "n_customers": 478,
+      "n_bad": 8,
+      "bad_rate": 1.67
+    },
+    {
+      "decile": 3,
+      "n_customers": 478,
+      "n_bad": 8,
+      "bad_rate": 1.67
+    },
+    {
+      "decile": 4,
+      "n_customers": 478,
+      "n_bad": 13,
+      "bad_rate": 2.72
+    },
+    {
+      "decile": 5,
+      "n_customers": 478,
+      "n_bad": 19,
+      "bad_rate": 3.97
+    },
+    {
+      "decile": 6,
+      "n_customers": 478,
+      "n_bad": 24,
+      "bad_rate": 5.02
+    },
+    {
+      "decile": 7,
+      "n_customers": 478,
+      "n_bad": 20,
+      "bad_rate": 4.18
+    },
+    {
+      "decile": 8,
+      "n_customers": 478,
+      "n_bad": 22,
+      "bad_rate": 4.6
+    },
+    {
+      "decile": 9,
+      "n_customers": 478,
+      "n_bad": 42,
+      "bad_rate": 8.79
+    },
+    {
+      "decile": 10,
+      "n_customers": 478,
+      "n_bad": 39,
+      "bad_rate": 8.16
+    }
+  ],
+  "top_features": [
+    {
+      "feature": "feature_7",
+      "importance": 0.04117954954331826
+    },
+    {
+      "feature": "creditlimit_sum",
+      "importance": 0.03499930232449227
+    },
+    {
+      "feature": "cashlimit_sum",
+      "importance": 0.03050179796947305
+    },
+    {
+      "feature": "feature_3",
+      "importance": 0.02739959671110069
+    },
+    {
+      "feature": "diff_lastpaymt_opened_dt_sum",
+      "importance": 0.02604719452208888
+    },
+    {
+      "feature": "cnt_0_29_sum",
+      "importance": 0.02580839818346575
+    },
+    {
+      "feature": "mean_diff_open_enquiry_dt",
+      "importance": 0.024581031728456867
+    },
+    {
+      "feature": "count_enquiry_recency_365",
+      "importance": 0.024228875720248313
+    },
+    {
+      "feature": "ratio_currbalance_creditlimit",
+      "importance": 0.022870366153512935
+    },
+    {
+      "feature": "feature_52",
+      "importance": 0.02280625013894896
+    },
+    {
+      "feature": "diff_lastpaymt_opened_dt_mean",
+      "importance": 0.022263071253453712
+    },
+    {
+      "feature": "cnt_0_29_mean",
+      "importance": 0.021968503423083284
+    },
+    {
+      "feature": "count_enquiry_recency_90",
+      "importance": 0.021541873953423062
+    },
+    {
+      "feature": "payment_history_length_mean",
+      "importance": 0.021326503098311786
+    },
+    {
+      "feature": "cur_balance_amt_mean",
+      "importance": 0.02094861796219994
+    },
+    {
+      "feature": "mean_enq_amt",
+      "importance": 0.019201608483161183
+    },
+    {
+      "feature": "total_enq_amt",
+      "importance": 0.0181889836344061
+    },
+    {
+      "feature": "high_credit_amt_mean",
+      "importance": 0.01758466488615751
+    },
+    {
+      "feature": "feature_20",
+      "importance": 0.017217889516632844
+    },
+    {
+      "feature": "feature_21",
+      "importance": 0.017212765204113394
+    }
+  ],
+  "all_models_gini": {
+    "Logistic Regression": 31.47,
+    "Gradient Boosting": 31.98,
+    "Random Forest": 32.9,
+    "Ensemble": 34.35
+  }
+}
